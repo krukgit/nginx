@@ -42,8 +42,10 @@ elsif node['nginx']['passenger']['install_method'] == 'source'
     gem_binary node['nginx']['passenger']['gem_binary'] if node['nginx']['passenger']['gem_binary']
   end
 
+  nginx_addon_dir = `passenger-config about nginx-addon-dir`
+
   node.run_state['nginx_configure_flags'] =
-    node.run_state['nginx_configure_flags'] | ["--add-module=#{node['nginx']['passenger']['root']}/ext/nginx"]
+    node.run_state['nginx_configure_flags'] | ["--add-module=#{nginx_addon_dir}"]
 
 end
 
